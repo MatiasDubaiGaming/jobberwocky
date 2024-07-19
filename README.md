@@ -60,5 +60,3 @@ sail artisan l5-swagger:generate
 ```
 
 Access the Swagger UI at http://localhostl/api/documentation
-
-
