@@ -1,0 +1,534 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Documentation for Jobberwocky API",
+        "contact": {
+            "name": "Matias Lancry",
+            "email": "lancrymatias@live.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/job_listings": {
+            "get": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Get list of job listings",
+                "description": "Returns a list of job listings. You can filter the results by title and location.",
+                "operationId": "getJobListings",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Filter by job title",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Filter by job location",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Create a new job listing",
+                "description": "Creates a new job listing with the provided details.",
+                "operationId": "createJobListing",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "company",
+                                    "skills",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Software Engineer"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Full-time software engineering position"
+                                    },
+                                    "company": {
+                                        "type": "string",
+                                        "example": "Tech Company"
+                                    },
+                                    "skills": {
+                                        "type": "string",
+                                        "example": "PHP, JavaScript, MySQL"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Remote"
+                                    },
+                                    "salary": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 80000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job listing created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Software Engineer"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Full-time software engineering position"
+                                        },
+                                        "company": {
+                                            "type": "string",
+                                            "example": "Tech Company"
+                                        },
+                                        "skills": {
+                                            "type": "string",
+                                            "example": "PHP, JavaScript, MySQL"
+                                        },
+                                        "location": {
+                                            "type": "string",
+                                            "example": "Remote"
+                                        },
+                                        "salary": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 80000
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Missing required fields or invalid data"
+                    }
+                }
+            }
+        },
+        "/api/job_listings/{id}": {
+            "get": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Get a job listing by ID",
+                "description": "Returns a single job listing based on the provided ID.",
+                "operationId": "getJobListingById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the job listing",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Software Engineer"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Full-time software engineering position"
+                                        },
+                                        "company": {
+                                            "type": "string",
+                                            "example": "Tech Company"
+                                        },
+                                        "skills": {
+                                            "type": "string",
+                                            "example": "PHP, JavaScript, MySQL"
+                                        },
+                                        "location": {
+                                            "type": "string",
+                                            "example": "Remote"
+                                        },
+                                        "salary": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 80000
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Job listing not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Update a job listing by ID",
+                "description": "Updates an existing job listing based on the provided ID.",
+                "operationId": "updateJobListing",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the job listing",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated job listing data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "company",
+                                    "skills",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated description."
+                                    },
+                                    "company": {
+                                        "type": "string",
+                                        "example": "Updated Company"
+                                    },
+                                    "skills": {
+                                        "type": "string",
+                                        "example": "Updated Skills"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Updated Location"
+                                    },
+                                    "salary": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 90000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Updated Title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Updated description."
+                                        },
+                                        "company": {
+                                            "type": "string",
+                                            "example": "Updated Company"
+                                        },
+                                        "skills": {
+                                            "type": "string",
+                                            "example": "Updated Skills"
+                                        },
+                                        "location": {
+                                            "type": "string",
+                                            "example": "Updated Location"
+                                        },
+                                        "salary": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 90000
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Missing required fields or invalid data"
+                    },
+                    "404": {
+                        "description": "Job listing not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Delete a job listing by ID",
+                "description": "Deletes an existing job listing based on the provided ID.",
+                "operationId": "deleteJobListing",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the job listing",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation: No content"
+                    },
+                    "404": {
+                        "description": "Job listing not found"
+                    }
+                }
+            }
+        },
+        "/api/job_listings/combined_jobs": {
+            "get": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Get combined list of internal and external job listings",
+                "description": "Returns a combined list of job listings from internal and external sources. You can filter the results by job title (`name`), minimum salary (`salary_min`), maximum salary (`salary_max`), and job location (`country`).",
+                "operationId": "getCombinedJobs",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by job title",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "salary_min",
+                        "in": "query",
+                        "description": "Filter by minimum salary",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "salary_max",
+                        "in": "query",
+                        "description": "Filter by maximum salary",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "description": "Filter by job location",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/job_listings/external_jobs": {
+            "get": {
+                "tags": [
+                    "Job Listings"
+                ],
+                "summary": "Fetch external job listings",
+                "description": "Returns a list of job listings from an external source. You can optionally provide query parameters to filter the results.",
+                "operationId": "fetchExternalJobs",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by job title",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "salary_min",
+                        "in": "query",
+                        "description": "Filter by minimum salary",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "salary_max",
+                        "in": "query",
+                        "description": "Filter by maximum salary",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "description": "Filter by job location",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/subscriptions": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Create a new subscription",
+                "description": "Creates a new email subscription with unique email validation.",
+                "operationId": "storeSubscription",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Email address for the subscription",
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Subscription created successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request: Email is missing or invalid format, or email already exists"
+                    },
+                    "500": {
+                        "description": "Internal Server Error: An error occurred while processing the request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "500": {
+                "description": "Internal Server Error"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Job Listings",
+            "description": "Job Listings"
+        },
+        {
+            "name": "Subscriptions",
+            "description": "Subscriptions"
+        }
+    ]
+}
